@@ -10,7 +10,7 @@ The website is based on the concepts and topics covered in *Data Mining: Concept
 
 [View Live Website](https://maheecse.github.io/trying/#outline)
 
-> https://maheecse.github.io/trying/#outline
+> Cheak it now
 
 ---
 
