@@ -1,0 +1,3362 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Data Mining: Concepts and Techniques | Chapter 1 Presentation Deck
+    </title>
+    <style>
+      /* ==========================================================================
+           1. CSS VARIABLES & RESET
+           ========================================================================== */
+      :root {
+        --forest-green: #2e6f40;
+        --light-mint: #cff0dc;
+        --medium-green: #68ba7f;
+        --dark-forest: #253d2c;
+        --white: #ffffff;
+        --off-white: #f8faf8;
+        --text-dark: #1e2922;
+        --text-muted: #4a5d50;
+        --border-color: #d3e8da;
+        --shadow-sm: 0 2px 6px rgba(37, 61, 44, 0.05);
+        --shadow-md: 0 6px 18px rgba(37, 61, 44, 0.08);
+        --shadow-lg: 0 12px 30px rgba(37, 61, 44, 0.12);
+        --radius-sm: 6px;
+        --radius-md: 10px;
+        --radius-lg: 16px;
+        --max-width: 1240px;
+        --transition: all 0.25s ease-in-out;
+        --rainbow-gradient: linear-gradient(
+          90deg,
+          #e74c3c,
+          #f39c12,
+          #f1c40f,
+          #2ecc71,
+          #3498db,
+          #9b59b6
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        color: var(--text-dark);
+        background-color: var(--off-white);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      /* Reading Progress Bar */
+      #progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background: var(--rainbow-gradient);
+        width: 0%;
+        z-index: 1001;
+        transition: width 0.1s ease-out;
+      }
+
+      /* Reveal Animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Rainbow Bar Template Accent */
+      .rainbow-accent-bar {
+        height: 4px;
+        width: 100%;
+        background: var(--rainbow-gradient);
+        border-radius: 2px;
+        margin: 0.5rem 0 1rem 0;
+      }
+
+      /* ==========================================================================
+           2. GLOBAL & TYPOGRAPHY STYLES
+           ========================================================================== */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        color: var(--dark-forest);
+        font-weight: 700;
+        line-height: 1.25;
+        margin-bottom: 0.75rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+      h2 {
+        font-size: 2rem;
+      }
+      h3 {
+        font-size: 1.35rem;
+      }
+      h4 {
+        font-size: 1.1rem;
+      }
+
+      p {
+        margin-bottom: 1rem;
+        color: var(--text-muted);
+      }
+
+      a {
+        color: var(--forest-green);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      .container {
+        width: 92%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 1.6rem;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-align: center;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: var(--transition);
+        min-height: 48px;
+        touch-action: manipulation;
+      }
+
+      .btn-primary {
+        background-color: var(--forest-green);
+        color: var(--white);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--dark-forest);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .btn-secondary {
+        background-color: var(--light-mint);
+        color: var(--dark-forest);
+        border-color: var(--medium-green);
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--medium-green);
+        color: var(--white);
+        transform: translateY(-2px);
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0.3rem 0.85rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background-color: var(--light-mint);
+        color: var(--dark-forest);
+        margin-bottom: 0.75rem;
+      }
+
+      .badge-outline {
+        background-color: transparent;
+        border: 1px solid var(--medium-green);
+        color: var(--forest-green);
+      }
+
+      .section-padding {
+        padding: 4.5rem 0;
+      }
+
+      .section-header {
+        max-width: 750px;
+        margin: 0 auto 3.5rem auto;
+        text-align: center;
+      }
+
+      .section-header h2 {
+        position: relative;
+        padding-bottom: 0.75rem;
+      }
+
+      .section-header h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: var(--rainbow-gradient);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+      }
+
+      .section-header:hover h2::after {
+        width: 120px;
+      }
+
+      /* ==========================================================================
+           3. HEADER & NAVIGATION
+           ========================================================================== */
+      .site-header {
+        background-color: var(--dark-forest);
+        color: var(--white);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.9rem 1rem;
+      }
+
+      .brand-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--white);
+        font-weight: 700;
+        font-size: 1.2rem;
+        z-index: 1002;
+      }
+
+      .brand-icon {
+        width: 38px;
+        height: 38px;
+        background-color: var(--medium-green);
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark-forest);
+        font-weight: 800;
+        transition: transform 0.3s ease;
+      }
+
+      .brand-logo:hover .brand-icon {
+        transform: rotate(6deg) scale(1.05);
+      }
+
+      .main-nav ul {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .main-nav a {
+        color: var(--white);
+        font-size: 0.95rem;
+        font-weight: 500;
+        opacity: 0.9;
+        position: relative;
+        padding: 0.5rem 0;
+        display: inline-block;
+      }
+
+      .main-nav a:hover {
+        opacity: 1;
+        color: var(--light-mint);
+      }
+
+      .main-nav a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 2px;
+        background: var(--rainbow-gradient);
+        transition: var(--transition);
+      }
+
+      .main-nav a:hover::after {
+        width: 100%;
+      }
+
+      .menu-toggle {
+        display: none;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 1002;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 5px;
+        border-radius: var(--radius-sm);
+      }
+
+      .menu-toggle span {
+        display: block;
+        width: 24px;
+        height: 2.5px;
+        background-color: var(--white);
+        border-radius: 2px;
+        transition:
+          transform 0.3s ease,
+          opacity 0.3s ease;
+      }
+
+      .menu-toggle.active span:nth-child(1) {
+        transform: translateY(7.5px) rotate(45deg);
+      }
+
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.active span:nth-child(3) {
+        transform: translateY(-7.5px) rotate(-45deg);
+      }
+
+      /* ==========================================================================
+           4. HERO SECTION
+           ========================================================================== */
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          var(--dark-forest) 0%,
+          #1a2f22 100%
+        );
+        color: var(--white);
+        padding: 4.5rem 0 5.5rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-section p {
+        color: #d1e3d7;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .hero-content h1 {
+        color: var(--white);
+        font-size: 2.8rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.15;
+      }
+
+      .hero-subtitle {
+        font-size: 1.25rem;
+        color: var(--medium-green) !important;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .hero-meta {
+        font-size: 0.9rem;
+        color: #a2c4af !important;
+        margin-bottom: 1.5rem;
+        padding-left: 0.75rem;
+        border-left: 3px solid var(--medium-green);
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .hero-slide-preview {
+        background-color: #ffffff;
+        color: var(--text-dark);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        position: relative;
+      }
+
+      .hero-slide-preview h3 {
+        color: var(--dark-forest);
+        font-size: 1.4rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .hero-slide-preview .authors {
+        font-size: 0.9rem;
+        color: var(--forest-green);
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      /* ==========================================================================
+           5. OUTLINE SECTION
+           ========================================================================== */
+      .outline-section {
+        background-color: var(--white);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .outline-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .outline-card {
+        background-color: var(--off-white);
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--forest-green);
+        padding: 1.25rem 1.5rem;
+        border-radius: var(--radius-sm);
+        transition: var(--transition);
+      }
+
+      .outline-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+        border-left-color: var(--medium-green);
+        background-color: #fff;
+      }
+
+      .outline-card h4 {
+        color: var(--dark-forest);
+        margin-bottom: 0.4rem;
+      }
+
+      .outline-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* ==========================================================================
+           6. CUSTOM SLIDE CARDS & GRAPHIC DIAGRAM RENDERINGS
+           ========================================================================== */
+      .slides-section {
+        background-color: var(--off-white);
+      }
+
+      .slide-filter-bar {
+        background: var(--white);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.25rem;
+        margin-bottom: 2.5rem;
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .search-box-wrapper {
+        position: relative;
+        width: 100%;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.6rem;
+        border: 1.5px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        font-size: 0.95rem;
+        outline: none;
+        transition: var(--transition);
+        background-color: var(--off-white);
+      }
+
+      .search-input:focus {
+        border-color: var(--forest-green);
+        background-color: var(--white);
+        box-shadow: 0 0 0 3px rgba(46, 111, 64, 0.12);
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 0.9rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 1rem;
+        pointer-events: none;
+      }
+
+      .filter-pills {
+        display: flex;
+        gap: 0.5rem;
+        overflow-x: auto;
+        padding-bottom: 0.3rem;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .filter-pill {
+        background-color: var(--off-white);
+        border: 1px solid var(--border-color);
+        color: var(--text-dark);
+        padding: 0.4rem 1rem;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: var(--transition);
+      }
+
+      .filter-pill:hover,
+      .filter-pill.active {
+        background-color: var(--forest-green);
+        color: var(--white);
+        border-color: var(--forest-green);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .slide-deck {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+
+      /* Standard Slide Card (Text-Heavy Default) */
+      .slide-card {
+        background-color: var(--white);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        padding: 2rem;
+        transition: var(--transition);
+        position: relative;
+      }
+
+      .slide-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--medium-green);
+      }
+
+      .slide-header-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .slide-number {
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--forest-green);
+        background-color: var(--light-mint);
+        padding: 0.3rem 0.75rem;
+        border-radius: 20px;
+      }
+
+      .slide-title {
+        font-size: 1.4rem;
+        color: var(--dark-forest);
+        margin-bottom: 0.25rem;
+      }
+
+      .slide-description {
+        font-size: 0.95rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .key-points-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--dark-forest);
+        margin-bottom: 0.5rem;
+      }
+
+      .key-points-list {
+        margin-bottom: 1.25rem;
+      }
+
+      .key-points-list li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 0.45rem;
+        font-size: 0.92rem;
+        color: var(--text-muted);
+      }
+
+      .key-points-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0.25rem;
+        color: var(--forest-green);
+        font-weight: bold;
+        font-size: 1.2rem;
+        line-height: 1;
+      }
+
+      .slide-quote {
+        background-color: #f0f7f2;
+        border-left: 3px solid var(--forest-green);
+        padding: 0.75rem 1rem;
+        font-style: italic;
+        font-size: 0.92rem;
+        color: var(--dark-forest);
+        margin-bottom: 1.25rem;
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      }
+
+      .slide-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .tag {
+        font-size: 0.75rem;
+        background-color: #f0f6f2;
+        color: var(--dark-forest);
+        padding: 0.25rem 0.65rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-color);
+      }
+
+      /* ------------------------------------------------------------------
+           DIAGRAM & GRAPHIC SPECIFIC STYLES
+           ------------------------------------------------------------------ */
+      .diagram-container {
+        background-color: #f4f8f5;
+        border: 1px dashed var(--medium-green);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        margin: 1.25rem 0;
+      }
+
+      .diagram-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--forest-green);
+        margin-bottom: 1rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+      }
+
+      /* Slide 7 Miner & Gemstones Visual Box */
+      .slide-7-visuals {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, #e8f5ec 0%, #d5ebdc 100%);
+        border-radius: var(--radius-md);
+        padding: 1.25rem 2rem;
+        margin: 1rem 0;
+        border: 1px solid var(--border-color);
+      }
+
+      .miner-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: var(--white);
+        padding: 0.6rem 1.25rem;
+        border-radius: 30px;
+        box-shadow: var(--shadow-sm);
+        font-weight: 700;
+        color: var(--dark-forest);
+        font-size: 0.9rem;
+      }
+
+      .miner-icon {
+        font-size: 1.6rem;
+      }
+
+      .gemstones-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--white);
+        padding: 0.6rem 1.25rem;
+        border-radius: 30px;
+        box-shadow: var(--shadow-sm);
+        font-weight: 700;
+        color: #8e44ad;
+        font-size: 0.9rem;
+      }
+
+      /* Slide 8 Flowchart Diagram */
+      .flowchart-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .flow-step {
+        background-color: var(--white);
+        border: 1.5px solid var(--forest-green);
+        color: var(--dark-forest);
+        padding: 0.5rem 0.85rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.82rem;
+        font-weight: 600;
+        box-shadow: var(--shadow-sm);
+        text-align: center;
+      }
+
+      .flow-step.highlight {
+        background-color: var(--forest-green);
+        color: var(--white);
+      }
+
+      .flow-arrow {
+        color: var(--medium-green);
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      /* Slide 10 Business Intelligence Pyramid Diagram */
+      .bi-pyramid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+
+      .pyramid-tier {
+        width: 100%;
+        padding: 0.5rem 1rem;
+        text-align: center;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--white);
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s ease;
+      }
+
+      .pyramid-tier:hover {
+        transform: scale(1.02);
+      }
+
+      .tier-6 {
+        width: 45%;
+        background-color: #1e3a2b;
+      } /* Decision Making */
+      .tier-5 {
+        width: 56%;
+        background-color: #2e6f40;
+      } /* Data Presentation */
+      .tier-4 {
+        width: 67%;
+        background-color: #3b8752;
+      } /* Data Mining */
+      .tier-3 {
+        width: 78%;
+        background-color: #52a26a;
+      } /* Data Exploration */
+      .tier-2 {
+        width: 89%;
+        background-color: #68ba7f;
+      } /* Preprocessing & Warehouse */
+      .tier-1 {
+        width: 100%;
+        background-color: #8ccb9e;
+        color: var(--dark-forest);
+      } /* Data Sources */
+
+      /* Slide 28 Interdisciplinary Hub-and-Spoke Visual */
+      .interdisciplinary-hub {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .hub-node {
+        background: var(--white);
+        border: 1px solid var(--border-color);
+        padding: 0.75rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--dark-forest);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .hub-center {
+        grid-column: 2;
+        background: var(--forest-green);
+        color: var(--white);
+        font-weight: 700;
+        border-color: var(--dark-forest);
+      }
+
+      /* No Results Message */
+      #no-results-msg {
+        display: none;
+        text-align: center;
+        padding: 3rem 1rem;
+        background: var(--white);
+        border-radius: var(--radius-md);
+        border: 1px dashed var(--border-color);
+        color: var(--text-muted);
+      }
+
+      /* ==========================================================================
+           7. KDD HIGHLIGHT BANNER
+           ========================================================================== */
+      .highlight-banner {
+        background-color: var(--dark-forest);
+        color: var(--white);
+        padding: 3.5rem 0;
+        text-align: center;
+      }
+
+      .highlight-banner h2 {
+        color: var(--white);
+        margin-bottom: 0.5rem;
+      }
+
+      .highlight-banner p {
+        color: #c2dacb;
+        max-width: 750px;
+        margin: 0 auto 1.5rem auto;
+        font-size: 1rem;
+      }
+
+      /* ==========================================================================
+           8. REFERENCE BOOKS SECTION
+           ========================================================================== */
+      .books-section {
+        background-color: var(--white);
+      }
+
+      .books-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.25rem;
+      }
+
+      .book-card {
+        background-color: var(--off-white);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 1.25rem;
+        transition: var(--transition);
+      }
+
+      .book-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-sm);
+        border-color: var(--medium-green);
+        background-color: var(--white);
+      }
+
+      .book-card h4 {
+        font-size: 1rem;
+        color: var(--dark-forest);
+        margin-bottom: 0.4rem;
+      }
+
+      .book-author {
+        font-size: 0.85rem;
+        color: var(--forest-green);
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+      }
+
+      .book-details {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 0;
+      }
+
+      /* Back To Top Button */
+      .back-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 1.5rem;
+        width: 48px;
+        height: 48px;
+        background-color: var(--forest-green);
+        color: var(--white);
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: var(--shadow-lg);
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: var(--transition);
+        z-index: 999;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .back-to-top:hover {
+        background-color: var(--dark-forest);
+        transform: translateY(-3px);
+      }
+
+      /* ==========================================================================
+           9. FOOTER
+           ========================================================================== */
+      .site-footer {
+        background-color: var(--dark-forest);
+        color: var(--white);
+        padding: 3.5rem 0 2rem 0;
+        border-top: 4px solid var(--forest-green);
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .footer-info h3 {
+        color: var(--white);
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-info p {
+        color: #a2c4af;
+        font-size: 0.88rem;
+        max-width: 420px;
+      }
+
+      .footer-links h4 {
+        color: var(--light-mint);
+        font-size: 0.95rem;
+        margin-bottom: 0.85rem;
+      }
+
+      .footer-links ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      .footer-links a {
+        color: #c2dacb;
+        font-size: 0.88rem;
+      }
+
+      .footer-links a:hover {
+        color: var(--white);
+        padding-left: 4px;
+      }
+
+      .footer-bottom {
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+        font-size: 0.85rem;
+        color: #83a690;
+      }
+
+      /* ==========================================================================
+           10. RESPONSIVE DESIGN
+           ========================================================================== */
+      @media (max-width: 992px) {
+        h1 {
+          font-size: 2.2rem;
+        }
+        h2 {
+          font-size: 1.75rem;
+        }
+
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+
+        .main-nav {
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 80%;
+          max-width: 320px;
+          height: 100vh;
+          background-color: var(--dark-forest);
+          padding: 5.5rem 2rem 2rem 2rem;
+          box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+          transform: translateX(100%);
+          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          z-index: 1001;
+        }
+
+        .main-nav.open {
+          transform: translateX(0);
+        }
+
+        .main-nav ul {
+          flex-direction: column;
+          gap: 1.25rem;
+        }
+
+        .main-nav a {
+          font-size: 1.1rem;
+          padding: 0.5rem 0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          width: 100%;
+        }
+
+        .section-padding {
+          padding: 3rem 0;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .slide-7-visuals {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .interdisciplinary-hub {
+          grid-template-columns: 1fr;
+        }
+
+        .hub-center {
+          grid-column: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Reading Progress Bar -->
+    <div id="progress-bar"></div>
+
+    <!-- ==========================================================================
+         1. HEADER / NAVIGATION
+         ========================================================================== -->
+    <header class="site-header">
+      <div class="container header-container">
+        <a href="#home" class="brand-logo">
+          <div class="brand-icon">DM</div>
+          <span>Data Mining Course</span>
+        </a>
+
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="Toggle Navigation Menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="main-nav" id="mainNav">
+          <ul>
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#outline" class="nav-link">Outline</a></li>
+            <li><a href="#slides" class="nav-link">All 41 Slides</a></li>
+            <li><a href="#kdd" class="nav-link">KDD Process</a></li>
+            <li><a href="#books" class="nav-link">Reference Books</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ==========================================================================
+         2. HERO SECTION
+         ========================================================================== -->
+    <section id="home" class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="badge">Academic Slide Deck</span>
+          <h1>Data Mining: Concepts and Techniques</h1>
+          <p class="hero-subtitle">3rd Edition — Chapter 1 Presentation</p>
+          <p class="hero-meta">
+            <strong>Authors:</strong> Jiawei Han, Micheline Kamber, and Jian
+            Pei<br />
+            <strong>Affiliations:</strong> University of Illinois at
+            Urbana-Champaign &amp; Simon Fraser University<br />
+            <em>©2011 Han, Kamber &amp; Pei. All rights reserved.</em>
+          </p>
+          <p>
+            An interactive, full-curriculum web presentation of the 41-slide
+            introductory deck covering KDD processes, multidimensional data
+            mining functionalities, interdisciplinary technologies, and key
+            application areas.
+          </p>
+          <div class="hero-actions">
+            <a href="#slides" class="btn btn-primary">Browse All 41 Slides</a>
+            <a href="#outline" class="btn btn-secondary"
+              >View Chapter Outline</a
+            >
+          </div>
+        </div>
+
+        <!-- Slide 1 Preview Box with Rainbow Accent Bar -->
+        <div class="hero-slide-preview">
+          <div class="slide-number">Slide 01</div>
+          <div class="rainbow-accent-bar"></div>
+          <h3>Data Mining: Concepts and Techniques</h3>
+          <p class="authors">Jiawei Han, Micheline Kamber, Jian Pei</p>
+          <p
+            style="
+              font-size: 0.88rem;
+              color: var(--text-muted);
+              margin-bottom: 0.75rem;
+            "
+          >
+            Chapter 1: Introduction &amp; Fundamental Principles
+          </p>
+          <div class="slide-tags">
+            <span class="tag">#3rdEdition</span>
+            <span class="tag">#MorganKaufmann</span>
+            <span class="tag">#UIUC</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         3. CHAPTER OUTLINE SECTION
+         ========================================================================== -->
+    <section id="outline" class="section-padding outline-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge">Structure</span>
+          <h2>Chapter 1 Curriculum Outline</h2>
+          <p>
+            Key topics presented across the 10 structural segments in Chapter 1.
+          </p>
+        </div>
+
+        <div class="outline-grid">
+          <div class="outline-card reveal">
+            <h4>1. Why Data Mining?</h4>
+            <p>
+              Explosive data growth, data deluge vs. knowledge scarcity, and
+              evolution of data science.
+            </p>
+          </div>
+          <div class="outline-card reveal">
+            <h4>2. What Is Data Mining?</h4>
+            <p>
+              Definition of pattern discovery, misnomers, and distinguishing
+              mining from simple queries.
+            </p>
+          </div>
+          <div class="outline-card reveal">
+            <h4>3. KDD Process</h4>
+            <p>
+              End-to-end knowledge discovery flow: Cleaning, Integration,
+              Warehousing, Mining, and Evaluation.
+            </p>
+          </div>
+          <div class="outline-card reveal">
+            <h4>4. Multi-Dimensional View</h4>
+            <p>
+              Taxonomy based on data types, mined knowledge functions,
+              underlying techniques, and applications.
+            </p>
+          </div>
+          <div class="outline-card reveal">
+            <h4>5. What Kinds of Data?</h4>
+            <p>
+              Relational DBs, warehouses, streams, graphs, time-series, text,
+              spatiotemporal, and Web data.
+            </p>
+          </div>
+          <div class="outline-card reveal">
+            <h4>6. Patterns &amp; Functions</h4>
+            <p>
+              Generalization, association, classification, clustering, outlier
+              analysis, and trend/network evolution.
+            </p>
+          </div>
+          <div class="outline-card reveal">
+            <h4>7. Technologies Used</h4>
+            <p>
+              Confluence of statistics, machine learning, high-performance
+              computing, DBMS, and visualization.
+            </p>
+          </div>
+          <div class="outline-card reveal">
+            <h4>8. Targeted Applications</h4>
+            <p>
+              Business intelligence, medical analytics, Web PageRank,
+              recommender systems, and software engineering.
+            </p>
+          </div>
+          <div class="outline-card reveal">
+            <h4>9. Major Issues &amp; Challenges</h4>
+            <p>
+              Mining methodology, scalability, handling dynamic heterogeneous
+              data, privacy, and social impacts.
+            </p>
+          </div>
+          <div class="outline-card reveal">
+            <h4>10. History &amp; Society</h4>
+            <p>
+              Evolution of KDD workshops, ACM SIGKDD, major conferences,
+              journals, and online bibliography search.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         4. KDD PROCESS HIGHLIGHT BANNER
+         ========================================================================== -->
+    <section id="kdd" class="highlight-banner">
+      <div class="container">
+        <h2>Knowledge Discovery in Databases (KDD) Pipeline</h2>
+        <p>
+          Data mining is the essential core step within the comprehensive
+          end-to-end process of turning raw databases into actionable domain
+          knowledge.
+        </p>
+
+        <div
+          class="diagram-container"
+          style="
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(207, 240, 220, 0.3);
+          "
+        >
+          <div class="flowchart-wrapper">
+            <div
+              class="flow-step"
+              style="
+                background: rgba(255, 255, 255, 0.15);
+                color: #fff;
+                border-color: var(--light-mint);
+              "
+            >
+              1. Databases
+            </div>
+            <span class="flow-arrow" style="color: var(--light-mint)">→</span>
+            <div
+              class="flow-step"
+              style="
+                background: rgba(255, 255, 255, 0.15);
+                color: #fff;
+                border-color: var(--light-mint);
+              "
+            >
+              2. Data Cleaning
+            </div>
+            <span class="flow-arrow" style="color: var(--light-mint)">→</span>
+            <div
+              class="flow-step"
+              style="
+                background: rgba(255, 255, 255, 0.15);
+                color: #fff;
+                border-color: var(--light-mint);
+              "
+            >
+              3. Data Integration
+            </div>
+            <span class="flow-arrow" style="color: var(--light-mint)">→</span>
+            <div
+              class="flow-step"
+              style="
+                background: rgba(255, 255, 255, 0.15);
+                color: #fff;
+                border-color: var(--light-mint);
+              "
+            >
+              4. Data Warehouse
+            </div>
+            <span class="flow-arrow" style="color: var(--light-mint)">→</span>
+            <div
+              class="flow-step"
+              style="
+                background: rgba(255, 255, 255, 0.15);
+                color: #fff;
+                border-color: var(--light-mint);
+              "
+            >
+              5. Selection
+            </div>
+            <span class="flow-arrow" style="color: var(--light-mint)">→</span>
+            <div
+              class="flow-step"
+              style="
+                background: var(--medium-green);
+                color: #1e2922;
+                border-color: var(--light-mint);
+                font-weight: 700;
+              "
+            >
+              6. Data Mining
+            </div>
+            <span class="flow-arrow" style="color: var(--light-mint)">→</span>
+            <div
+              class="flow-step"
+              style="
+                background: rgba(255, 255, 255, 0.15);
+                color: #fff;
+                border-color: var(--light-mint);
+              "
+            >
+              7. Pattern Evaluation
+            </div>
+            <span class="flow-arrow" style="color: var(--light-mint)">→</span>
+            <div
+              class="flow-step"
+              style="
+                background: rgba(255, 255, 255, 0.15);
+                color: #fff;
+                border-color: var(--light-mint);
+              "
+            >
+              8. Knowledge
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         5. ALL 41 SLIDES DETAILED SECTION
+         ========================================================================== -->
+    <section id="slides" class="section-padding slides-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge">Complete Slide Deck</span>
+          <h2>Detailed Slide Modules (Slides 1 – 41)</h2>
+          <p>
+            Comprehensive breakdown of every individual slide formatted with
+            textbook template elements.
+          </p>
+        </div>
+
+        <!-- Slide Interactive Toolbar -->
+        <div class="slide-filter-bar reveal">
+          <div class="search-box-wrapper">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              id="slideSearch"
+              class="search-input"
+              placeholder="Search slides by title, keyword, or function (e.g., KDD, Classification, Web, Pyramid)..."
+            />
+          </div>
+          <div class="filter-pills">
+            <button class="filter-pill active" data-filter="all">
+              All Slides (41)
+            </button>
+            <button class="filter-pill" data-filter="intro">
+              Intro &amp; Overview
+            </button>
+            <button class="filter-pill" data-filter="diagrams">
+              Diagram Slides
+            </button>
+            <button class="filter-pill" data-filter="kdd">
+              KDD &amp; Data
+            </button>
+            <button class="filter-pill" data-filter="function">
+              Functions &amp; ML
+            </button>
+            <button class="filter-pill" data-filter="applications">
+              Applications
+            </button>
+            <button class="filter-pill" data-filter="history">
+              History &amp; Books
+            </button>
+          </div>
+        </div>
+
+        <div id="no-results-msg">
+          <h3>No matching slides found</h3>
+          <p>
+            Try searching for a different keyword or resetting the category
+            filter.
+          </p>
+        </div>
+
+        <div class="slide-deck">
+          <!-- SLIDE 01 -->
+          <article class="slide-card reveal" id="slide-1" data-category="intro">
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 01</span>
+              <span class="badge-outline">Title Slide</span>
+            </div>
+            <h3 class="slide-title">
+              Data Mining: Concepts and Techniques (3rd ed.)
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Official introductory title slide for Chapter 1.
+            </p>
+            <div class="key-points-title">Key Metadata:</div>
+            <ul class="key-points-list">
+              <li><strong>Chapter:</strong> Chapter 1 — Introduction</li>
+              <li>
+                <strong>Authors:</strong> Jiawei Han, Micheline Kamber, and Jian
+                Pei
+              </li>
+              <li>
+                <strong>Affiliations:</strong> University of Illinois at
+                Urbana-Champaign &amp; Simon Fraser University
+              </li>
+              <li>
+                <strong>Publisher Copyright:</strong> ©2011 Han, Kamber &amp;
+                Pei. All rights reserved.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Textbook</span>
+              <span class="tag">#HanKamberPei</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 02 -->
+          <article class="slide-card reveal" id="slide-2" data-category="intro">
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 02</span>
+              <span class="badge-outline">Outline</span>
+            </div>
+            <h3 class="slide-title">Chapter 1. Introduction (Outline)</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Provides the structural roadmap for all topics discussed
+              throughout Chapter 1.
+            </p>
+            <div class="key-points-title">Topics Covered:</div>
+            <ul class="key-points-list">
+              <li>Why Data Mining? / What Is Data Mining?</li>
+              <li>
+                A Multi-Dimensional View of Data Mining / What Kind of Data Can
+                Be Mined?
+              </li>
+              <li>
+                What Kinds of Patterns Can Be Mined? / What Technology Are Used?
+              </li>
+              <li>
+                What Kind of Applications Are Targeted? / Major Issues in Data
+                Mining
+              </li>
+              <li>
+                A Brief History of Data Mining and Data Mining Society / Summary
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Roadmap</span>
+              <span class="tag">#ChapterOutline</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 03 -->
+          <article class="slide-card reveal" id="slide-3" data-category="intro">
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 03</span>
+              <span class="badge-outline">Motivation</span>
+            </div>
+            <h3 class="slide-title">Why Data Mining?</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Addresses the exponential growth of stored data and the critical
+              necessity for automated analytical tools.
+            </p>
+            <div class="slide-quote">
+              "We are drowning in data, but starving for knowledge!" —
+              "Necessity is the mother of invention"
+            </div>
+            <div class="key-points-title">Core Points:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Explosive Data Growth:</strong> Scaling rapidly from
+                terabytes to petabytes.
+              </li>
+              <li>
+                <strong>Collection &amp; Availability:</strong> Automated
+                collection tools, database systems, Web, and computerized
+                society.
+              </li>
+              <li>
+                <strong>Major Data Sources:</strong> Business (Web, e-commerce,
+                transactions, stocks), Science (remote sensing, bioinformatics,
+                scientific simulation), Society (news, digital cameras,
+                YouTube).
+              </li>
+              <li>
+                <strong>Solution:</strong> Data mining — automated analysis of
+                massive data sets.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#BigData</span>
+              <span class="tag">#Petabytes</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 04 -->
+          <article class="slide-card reveal" id="slide-4" data-category="intro">
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 04</span>
+              <span class="badge-outline">Science Paradigm</span>
+            </div>
+            <h3 class="slide-title">Evolution of Sciences</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Traces historical shifts in scientific investigation leading to
+              modern data-driven science.
+            </p>
+            <div class="key-points-title">Historical Milestones:</div>
+            <ul class="key-points-list">
+              <li><strong>Before 1600:</strong> Empirical science.</li>
+              <li>
+                <strong>1600–1950s:</strong> Theoretical science — theoretical
+                models motivate experiments and generalize understanding.
+              </li>
+              <li>
+                <strong>1950s–1990s:</strong> Computational science — grew out
+                of inability to find closed-form solutions for complex
+                mathematical models.
+              </li>
+              <li>
+                <strong>1990–Present:</strong> Data science — flood of data from
+                instruments/simulations, economical petabyte storage,
+                Internet/Grid access. Info management tasks scale almost
+                linearly with data volume.
+              </li>
+            </ul>
+            <div class="slide-quote">
+              Citation: Jim Gray and Alex Szalay, "The World Wide Telescope: An
+              Archetype for Online Science", Comm. ACM, 45(11): 50-54, Nov.
+              2002.
+            </div>
+            <div class="slide-tags">
+              <span class="tag">#DataScience</span>
+              <span class="tag">#ScientificParadigms</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 05 -->
+          <article class="slide-card reveal" id="slide-5" data-category="intro">
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 05</span>
+              <span class="badge-outline">Database Evolution</span>
+            </div>
+            <h3 class="slide-title">Evolution of Database Technology</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              A 50-year chronology of information storage and analysis
+              paradigms.
+            </p>
+            <div class="key-points-title">Chronology:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>1960s:</strong> Data collection, database creation, IMS
+                and network DBMS.
+              </li>
+              <li>
+                <strong>1970s:</strong> Relational data model, relational DBMS
+                implementation.
+              </li>
+              <li>
+                <strong>1980s:</strong> RDBMS, advanced data models
+                (extended-relational, OO, deductive); spatial, scientific,
+                engineering DBMS.
+              </li>
+              <li>
+                <strong>1990s:</strong> Data mining, data warehousing,
+                multimedia databases, Web databases.
+              </li>
+              <li>
+                <strong>2000s:</strong> Stream data management and mining; data
+                mining applications; Web technology (XML, data integration) and
+                global information systems.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#DBMS</span>
+              <span class="tag">#DataWarehousing</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 06 -->
+          <article class="slide-card reveal" id="slide-6" data-category="intro">
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 06</span>
+              <span class="badge-outline">Outline Transition</span>
+            </div>
+            <h3 class="slide-title">
+              Chapter 1. Introduction (Topic Transition)
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Re-focusing section definition: Moving from motivation to "What Is
+              Data Mining?"
+            </p>
+            <div class="slide-tags">
+              <span class="tag">#ChapterTransition</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 07 (CONTAINING MINER & GEMSTONES GRAPHIC ICONS) -->
+          <article
+            class="slide-card reveal"
+            id="slide-7"
+            data-category="intro diagrams"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 07</span>
+              <span class="badge-outline">Definition &amp; Graphics</span>
+            </div>
+            <h3 class="slide-title">What Is Data Mining?</h3>
+            <div class="rainbow-accent-bar"></div>
+
+            <!-- Clip-Art Icons Rendered per Slide Note -->
+            <div class="slide-7-visuals">
+              <div class="miner-badge">
+                <span class="miner-icon">⛏️</span>
+                <span>Miner Graphic (Top Right)</span>
+              </div>
+              <div
+                style="
+                  font-size: 0.85rem;
+                  font-weight: 600;
+                  color: var(--text-muted);
+                "
+              >
+                Data Mining = Knowledge Extraction
+              </div>
+              <div class="gemstones-badge">
+                <span>💎💎 Gemstones Graphic (Bottom Right)</span>
+              </div>
+            </div>
+
+            <p class="slide-description">
+              Formal definition and distinction of knowledge extraction from
+              simple data queries.
+            </p>
+            <div class="key-points-title">Core Definitions:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Data Mining:</strong> Extraction of interesting
+                (non-trivial, implicit, previously unknown, and potentially
+                useful) patterns or knowledge from huge amounts of data.
+              </li>
+              <li>
+                <strong>Is it a Misnomer?</strong> Often called Knowledge
+                Discovery in Databases (KDD), knowledge extraction, data/pattern
+                analysis, data archeology, data dredging, information
+                harvesting, or business intelligence.
+              </li>
+              <li>
+                <strong>What is NOT Data Mining?</strong> Simple search or basic
+                query processing, and simple deductive expert systems.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#KDD</span>
+              <span class="tag">#PatternDiscovery</span>
+              <span class="tag">#MiningIcons</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 08 (CONTAINING KDD FLOWCHART DIAGRAM) -->
+          <article
+            class="slide-card reveal"
+            id="slide-8"
+            data-category="kdd diagrams"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 08</span>
+              <span class="badge-outline">KDD Flowchart Diagram</span>
+            </div>
+            <h3 class="slide-title">Knowledge Discovery (KDD) Process</h3>
+            <div class="rainbow-accent-bar"></div>
+
+            <!-- Flowchart Diagram Box -->
+            <div class="diagram-container">
+              <div class="diagram-label">
+                📊 Slide Diagram: KDD Process Flowchart (Database View)
+              </div>
+              <div class="flowchart-wrapper">
+                <div class="flow-step">Databases</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">Data Cleaning</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">Integration</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">Data Warehouse</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">Selection</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step highlight">Data Mining</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">Evaluation</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">Knowledge</div>
+              </div>
+            </div>
+
+            <p class="slide-description">
+              View from typical database systems and data warehousing
+              communities showing data mining's central role.
+            </p>
+            <div class="key-points-title">Sequential Steps:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Data Cleaning:</strong> Remove noise and inconsistent
+                data.
+              </li>
+              <li>
+                <strong>Data Integration:</strong> Combine multiple data
+                sources.
+              </li>
+              <li>
+                <strong>Data Warehouse &amp; Selection:</strong> Retrieve
+                task-relevant data.
+              </li>
+              <li>
+                <strong>Data Mining:</strong> Apply intelligent methods to
+                extract data patterns.
+              </li>
+              <li>
+                <strong
+                  >Pattern Evaluation &amp; Knowledge Presentation:</strong
+                >
+                Identify truly interesting patterns and present mined knowledge.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#KDDPipeline</span>
+              <span class="tag">#FlowchartDiagram</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 09 -->
+          <article class="slide-card reveal" id="slide-9" data-category="kdd">
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 09</span>
+              <span class="badge-outline">Application Architecture</span>
+            </div>
+            <h3 class="slide-title">Example: A Web Mining Framework</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Practical implementation of KDD within web data environments.
+            </p>
+            <div class="key-points-title">Web Mining Steps:</div>
+            <ul class="key-points-list">
+              <li>Data cleaning and integration from multiple web sources.</li>
+              <li>
+                Warehousing data and constructing multi-dimensional data cubes.
+              </li>
+              <li>Data selection targeted for mining algorithms.</li>
+              <li>
+                Core data mining, presentation of results, and storing patterns
+                in a knowledge base.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#WebMining</span>
+              <span class="tag">#DataCube</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 10 (CONTAINING BI PYRAMID DIAGRAM) -->
+          <article
+            class="slide-card reveal"
+            id="slide-10"
+            data-category="applications diagrams"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 10</span>
+              <span class="badge-outline">BI Pyramid Diagram</span>
+            </div>
+            <h3 class="slide-title">Data Mining in Business Intelligence</h3>
+            <div class="rainbow-accent-bar"></div>
+
+            <!-- Pyramid Visual Rendering -->
+            <div class="diagram-container">
+              <div class="diagram-label">
+                🔺 Slide Diagram: Business Intelligence Pyramid
+              </div>
+              <div class="bi-pyramid">
+                <div class="pyramid-tier tier-6">
+                  Decision Making (Executives)
+                </div>
+                <div class="pyramid-tier tier-5">
+                  Data Presentation (Visualization)
+                </div>
+                <div class="pyramid-tier tier-4">
+                  Data Mining (Information Discovery)
+                </div>
+                <div class="pyramid-tier tier-3">
+                  Data Exploration (OLAP / Querying)
+                </div>
+                <div class="pyramid-tier tier-2">
+                  Data Preprocessing &amp; Warehouses
+                </div>
+                <div class="pyramid-tier tier-1">
+                  Data Sources (Files, Web, DBs)
+                </div>
+              </div>
+            </div>
+
+            <p class="slide-description">
+              Hierarchy showing increasing potential to support executive
+              business decision-making.
+            </p>
+            <div class="key-points-title">The BI Pyramid Levels:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Data Sources:</strong> Paper, files, Web documents,
+                scientific experiments, database systems.
+              </li>
+              <li>
+                <strong>Preprocessing &amp; Warehouses:</strong> Managed by
+                DBAs.
+              </li>
+              <li>
+                <strong>Data Exploration:</strong> Statistical summary,
+                querying, reporting (Data Analyst).
+              </li>
+              <li>
+                <strong>Data Mining:</strong> Knowledge discovery (Data
+                Analyst).
+              </li>
+              <li>
+                <strong>Data Presentation:</strong> Visualization techniques
+                (Business Analyst).
+              </li>
+              <li>
+                <strong>Decision Making:</strong> Actionable strategy (End User
+                / Executive).
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#BusinessIntelligence</span>
+              <span class="tag">#PyramidDiagram</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 11 -->
+          <article
+            class="slide-card reveal"
+            id="slide-11"
+            data-category="applications"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 11</span>
+              <span class="badge-outline">Comparison</span>
+            </div>
+            <h3 class="slide-title">Example: Mining vs. Data Exploration</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Differentiating basic reporting from true automated discovery
+              tools.
+            </p>
+            <div class="key-points-title">Key Observations:</div>
+            <ul class="key-points-list">
+              <li>
+                Traditional Business Intelligence focuses heavily on
+                warehousing, data cubes, and reporting without deep mining.
+              </li>
+              <li>
+                Distinction between general business objects vs. dedicated data
+                mining algorithms.
+              </li>
+              <li>
+                Supply chain management examples showing tool usage, data
+                exploration, and visual presentation.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#DataExploration</span>
+              <span class="tag">#OLAP</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 12 (CONTAINING ML / STATS FLOWCHART DIAGRAM) -->
+          <article
+            class="slide-card reveal"
+            id="slide-12"
+            data-category="function diagrams"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 12</span>
+              <span class="badge-outline">ML/Stats Flow Diagram</span>
+            </div>
+            <h3 class="slide-title">
+              KDD Process: ML and Statistics Perspective
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+
+            <!-- Flowchart Box -->
+            <div class="diagram-container">
+              <div class="diagram-label">
+                ⚙️ Slide Diagram: ML &amp; Statistical Learning Process
+              </div>
+              <div class="flowchart-wrapper">
+                <div class="flow-step">Input Data</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">
+                  Data Preprocessing<br /><small
+                    >(Feature Selection / Reduction)</small
+                  >
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step highlight">
+                  Data Mining<br /><small>(Pattern Discovery)</small>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">
+                  Post-Processing<br /><small
+                    >(Evaluation / Visualization)</small
+                  >
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">Output Knowledge</div>
+              </div>
+            </div>
+
+            <p class="slide-description">
+              Typical process flow adopted by machine learning and statistical
+              modeling research.
+            </p>
+            <div class="key-points-title">Process Flow:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Input Data</strong> →
+                <strong>Data Preprocessing:</strong> Data integration,
+                normalization, feature selection, and dimension reduction.
+              </li>
+              <li>
+                → <strong>Data Mining:</strong> Pattern discovery, association
+                &amp; correlation, classification, clustering, outlier analysis.
+              </li>
+              <li>
+                → <strong>Post-Processing:</strong> Pattern evaluation,
+                selection, interpretation, visualization.
+              </li>
+              <li>→ <strong>Output Knowledge</strong></li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#MachineLearning</span>
+              <span class="tag">#Statistics</span>
+              <span class="tag">#FlowDiagram</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 13 -->
+          <article
+            class="slide-card reveal"
+            id="slide-13"
+            data-category="applications"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 13</span>
+              <span class="badge-outline">Case Study</span>
+            </div>
+            <h3 class="slide-title">Example: Medical Data Mining</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Application of machine learning and statistical KDD processes in
+              healthcare.
+            </p>
+            <div class="key-points-title">Healthcare Data Pipeline:</div>
+            <ul class="key-points-list">
+              <li>
+                Health care and medical datasets heavily utilize feature
+                extraction and dimension reduction during preprocessing.
+              </li>
+              <li>
+                Applies classification algorithms (e.g. disease prediction) and
+                clustering processes (patient segmentation).
+              </li>
+              <li>
+                Post-processing delivers medical diagnostic presentations for
+                clinicians.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Healthcare</span>
+              <span class="tag">#MedicalMining</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 14 -->
+          <article
+            class="slide-card reveal"
+            id="slide-14"
+            data-category="intro"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 14</span>
+              <span class="badge-outline">Outline Transition</span>
+            </div>
+            <h3 class="slide-title">
+              Chapter 1. Introduction (Topic Transition)
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Transitioning into "A Multi-Dimensional View of Data Mining".
+            </p>
+            <div class="slide-tags">
+              <span class="tag">#ChapterTransition</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 15 -->
+          <article
+            class="slide-card reveal"
+            id="slide-15"
+            data-category="intro"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 15</span>
+              <span class="badge-outline">Taxonomy</span>
+            </div>
+            <h3 class="slide-title">Multi-Dimensional View of Data Mining</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Categorizing data mining across four foundational dimensions.
+            </p>
+            <div class="key-points-title">Four Dimensions:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Data to be Mined:</strong> Relational, OO,
+                heterogeneous, data warehouse, stream, spatial, time-series,
+                text, Web, graph networks.
+              </li>
+              <li>
+                <strong>Knowledge Functions:</strong> Characterization,
+                discrimination, association, classification, clustering, trend,
+                outlier analysis (descriptive vs. predictive).
+              </li>
+              <li>
+                <strong>Techniques Utilized:</strong> OLAP, machine learning,
+                statistics, pattern recognition, visualization, high-performance
+                computing.
+              </li>
+              <li>
+                <strong>Applications Targeted:</strong> Retail,
+                telecommunications, banking, fraud analysis, bio-data, stock
+                market, Web.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Taxonomy</span>
+              <span class="tag">#MultiDimensional</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 16 -->
+          <article
+            class="slide-card reveal"
+            id="slide-16"
+            data-category="intro"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 16</span>
+              <span class="badge-outline">Outline Transition</span>
+            </div>
+            <h3 class="slide-title">
+              Chapter 1. Introduction (Topic Transition)
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Transitioning into "What Kind of Data Can Be Mined?"
+            </p>
+            <div class="slide-tags">
+              <span class="tag">#ChapterTransition</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 17 -->
+          <article class="slide-card reveal" id="slide-17" data-category="kdd">
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 17</span>
+              <span class="badge-outline">Data Types</span>
+            </div>
+            <h3 class="slide-title">Data Mining: On What Kinds of Data?</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Overview of repository types and advanced complex data structures.
+            </p>
+            <div class="key-points-title">Repository Types:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Database-Oriented:</strong> Relational databases, data
+                warehouses, transactional databases.
+              </li>
+              <li>
+                <strong>Advanced Datasets:</strong> Data streams and sensor
+                data; time-series, temporal, biological sequences.
+              </li>
+              <li>
+                <strong>Structured Data:</strong> Graphs, social networks,
+                multi-linked data, object-relational DBs.
+              </li>
+              <li>
+                <strong>Unstructured/Semi-structured:</strong> Text databases,
+                spatial/spatiotemporal data, multimedia, World-Wide Web.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#DataStructures</span>
+              <span class="tag">#DataStreams</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 18 -->
+          <article
+            class="slide-card reveal"
+            id="slide-18"
+            data-category="intro"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 18</span>
+              <span class="badge-outline">Outline Transition</span>
+            </div>
+            <h3 class="slide-title">
+              Chapter 1. Introduction (Topic Transition)
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Transitioning into "Data Mining Functionalities".
+            </p>
+            <div class="slide-tags">
+              <span class="tag">#ChapterTransition</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 19 -->
+          <article
+            class="slide-card reveal"
+            id="slide-19"
+            data-category="function"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 19</span>
+              <span class="badge-outline">Function 1</span>
+            </div>
+            <h3 class="slide-title">Data Mining Function: Generalization</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Concept description, summarization, and characterization vs.
+              discrimination.
+            </p>
+            <div class="key-points-title">Key Elements:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Information Integration:</strong> Data cleaning,
+                transformation, integration, multi-dimensional models.
+              </li>
+              <li>
+                <strong>Data Cube Technology:</strong> Scalable methods for
+                computing/materializing multidimensional aggregates; OLAP.
+              </li>
+              <li>
+                <strong>Concept Description:</strong> Characterization
+                (summarizing target class) and discrimination (contrasting
+                target vs. comparison classes, e.g. dry vs. wet regions).
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Generalization</span>
+              <span class="tag">#OLAP</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 20 -->
+          <article
+            class="slide-card reveal"
+            id="slide-20"
+            data-category="function"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 20</span>
+              <span class="badge-outline">Function 2</span>
+            </div>
+            <h3 class="slide-title">Association and Correlation Analysis</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Discovering frequent itemsets and causal relationships in large
+              datasets.
+            </p>
+            <div class="key-points-title">Key Concepts:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Frequent Patterns:</strong> Items frequently purchased
+                or occurring together in transaction databases.
+              </li>
+              <li>
+                <strong>Typical Association Rule:</strong>
+                <code>Diaper → Beer [0.5%, 75%]</code> (support, confidence).
+              </li>
+              <li>
+                <strong>Association vs. Correlation:</strong> Are strongly
+                associated items truly correlated?
+              </li>
+              <li>
+                <strong>Efficiency:</strong> Scalable pattern mining algorithms
+                for classification and clustering.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#AssociationRules</span>
+              <span class="tag">#FrequentPatterns</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 21 -->
+          <article
+            class="slide-card reveal"
+            id="slide-21"
+            data-category="function"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 21</span>
+              <span class="badge-outline">Function 3</span>
+            </div>
+            <h3 class="slide-title">Data Mining Function: Classification</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Constructing predictive models from labeled training sets.
+            </p>
+            <div class="key-points-title">Key Elements:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Goal:</strong> Construct models to describe/distinguish
+                data classes for future class label prediction (e.g. classify
+                cars by gas mileage).
+              </li>
+              <li>
+                <strong>Typical Methods:</strong> Decision trees, Naïve
+                Bayesian, Support Vector Machines (SVM), Neural Networks,
+                Rule-based, Pattern-based, Logistic Regression.
+              </li>
+              <li>
+                <strong>Applications:</strong> Credit card fraud detection,
+                direct marketing, star/disease classification, Web page
+                categorization.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Classification</span>
+              <span class="tag">#SupervisedLearning</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 22 -->
+          <article
+            class="slide-card reveal"
+            id="slide-22"
+            data-category="function"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 22</span>
+              <span class="badge-outline">Function 4</span>
+            </div>
+            <h3 class="slide-title">Data Mining Function: Cluster Analysis</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Unsupervised learning when class labels are unknown.
+            </p>
+            <div class="key-points-title">Core Principles:</div>
+            <ul class="key-points-list">
+              <li>
+                Group objects into new categories or clusters based on data
+                similarity (e.g., clustering house values to identify housing
+                patterns).
+              </li>
+              <li>
+                <strong>Fundamental Principle:</strong> Maximize intra-class
+                similarity while minimizing inter-class similarity.
+              </li>
+              <li>
+                Broad range of partitioning, hierarchical, density-based, and
+                grid-based algorithms.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Clustering</span>
+              <span class="tag">#UnsupervisedLearning</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 23 -->
+          <article
+            class="slide-card reveal"
+            id="slide-23"
+            data-category="function"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 23</span>
+              <span class="badge-outline">Function 5</span>
+            </div>
+            <h3 class="slide-title">Data Mining Function: Outlier Analysis</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Identifying objects that deviate significantly from general data
+              behavior.
+            </p>
+            <div class="slide-quote">
+              "Noise or exception? — One person's garbage could be another's
+              treasure!"
+            </div>
+            <div class="key-points-title">Methods &amp; Applications:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Outlier:</strong> Data object that does not comply with
+                general data model or distribution.
+              </li>
+              <li>
+                <strong>Methods:</strong> Byproduct of clustering algorithms,
+                statistical tests, or regression models.
+              </li>
+              <li>
+                <strong>Applications:</strong> Credit card fraud detection, rare
+                event analysis, network intrusion detection.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#OutlierDetection</span>
+              <span class="tag">#FraudDetection</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 24 -->
+          <article
+            class="slide-card reveal"
+            id="slide-24"
+            data-category="function"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 24</span>
+              <span class="badge-outline">Temporal Mining</span>
+            </div>
+            <h3 class="slide-title">Time, Ordering, and Evolution Analysis</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Analyzing temporal order, trend patterns, and continuous data
+              streams.
+            </p>
+            <div class="key-points-title">Key Techniques:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Trend &amp; Time-Series:</strong> Regression and value
+                trajectory prediction.
+              </li>
+              <li>
+                <strong>Sequential Patterns:</strong> E.g., buying a digital
+                camera → subsequently buying a large SD card.
+              </li>
+              <li>
+                <strong>Biological Sequences:</strong> Motifs and biological
+                DNA/protein sequence alignment.
+              </li>
+              <li>
+                <strong>Data Streams:</strong> Mining ordered, time-varying,
+                potentially infinite continuous streams.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#TimeSeries</span>
+              <span class="tag">#SequentialPatterns</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 25 -->
+          <article
+            class="slide-card reveal"
+            id="slide-25"
+            data-category="function"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 25</span>
+              <span class="badge-outline">Network Mining</span>
+            </div>
+            <h3 class="slide-title">
+              Structure and Information Network Analysis
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Mining graph structures, social networks, and web link structures.
+            </p>
+            <div class="key-points-title">Graph &amp; Web Dimensions:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Graph Mining:</strong> Frequent subgraphs (chemical
+                structures), XML tree structures, web fragments.
+              </li>
+              <li>
+                <strong>Information Networks:</strong> Social networks (actor
+                nodes, link edges), co-author networks, link mining.
+              </li>
+              <li>
+                <strong>Web Mining:</strong> Web as an immense information
+                network (PageRank, HITS algorithm), community discovery,
+                opinion/usage mining.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#GraphMining</span>
+              <span class="tag">#SocialNetworks</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 26 -->
+          <article
+            class="slide-card reveal"
+            id="slide-26"
+            data-category="function"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 26</span>
+              <span class="badge-outline">Pattern Evaluation</span>
+            </div>
+            <h3 class="slide-title">Evaluation of Mined Knowledge</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Determining pattern interestingness, validity, and novel utility.
+            </p>
+            <div class="key-points-title">Evaluation Criteria:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Are all mined patterns interesting?</strong> No, some
+                patterns only fit narrow spatial/temporal constraints or
+                represent transient uninteresting facts.
+              </li>
+              <li>
+                <strong>Descriptive vs. Predictive:</strong> Coverage,
+                typicality vs. novelty.
+              </li>
+              <li>
+                <strong>Objective Metrics:</strong> Accuracy, confidence,
+                support, timeliness, and actionable value.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#PatternEvaluation</span>
+              <span class="tag">#Interestingness</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 27 -->
+          <article
+            class="slide-card reveal"
+            id="slide-27"
+            data-category="intro"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 27</span>
+              <span class="badge-outline">Outline Transition</span>
+            </div>
+            <h3 class="slide-title">
+              Chapter 1. Introduction (Topic Transition)
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Transitioning into "What Technologies Are Used? (Interdisciplinary
+              Confluence)".
+            </p>
+            <div class="slide-tags">
+              <span class="tag">#ChapterTransition</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 28 (CONTAINING HUB-AND-SPOKE DIAGRAM) -->
+          <article
+            class="slide-card reveal"
+            id="slide-28"
+            data-category="function diagrams"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 28</span>
+              <span class="badge-outline">Interdisciplinary Diagram</span>
+            </div>
+            <h3 class="slide-title">Confluence of Multiple Disciplines</h3>
+            <div class="rainbow-accent-bar"></div>
+
+            <!-- Hub-and-Spoke Diagram Box -->
+            <div class="diagram-container">
+              <div class="diagram-label">
+                🌐 Slide Diagram: Interdisciplinary Hub-and-Spoke
+              </div>
+              <div class="interdisciplinary-hub">
+                <div class="hub-node">Machine Learning</div>
+                <div class="hub-node">Statistics</div>
+                <div class="hub-node">Pattern Recognition</div>
+                <div class="hub-node hub-center">Data Mining</div>
+                <div class="hub-node">Database Systems</div>
+                <div class="hub-node">Visualization</div>
+                <div class="hub-node">High-Perf Computing</div>
+                <div class="hub-node">Applications</div>
+              </div>
+            </div>
+
+            <p class="slide-description">
+              Data mining rests at the vibrant intersection of computer science
+              subfields.
+            </p>
+            <div class="key-points-title">Contributing Fields:</div>
+            <ul class="key-points-list">
+              <li>Machine Learning &amp; Pattern Recognition</li>
+              <li>Statistics &amp; Data Visualization</li>
+              <li>Database Technology &amp; Algorithms</li>
+              <li>
+                High-Performance Computing (HPC) &amp; Domain Applications
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Interdisciplinary</span>
+              <span class="tag">#HubAndSpoke</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 29 -->
+          <article
+            class="slide-card reveal"
+            id="slide-29"
+            data-category="function"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 29</span>
+              <span class="badge-outline">Motivation</span>
+            </div>
+            <h3 class="slide-title">Why Confluence of Multiple Disciplines?</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Drivers mandating the integration of diverse computational
+              disciplines.
+            </p>
+            <div class="key-points-title">Core Drivers:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Tremendous Data Volume:</strong> Algorithms must scale
+                efficiently to terabyte and petabyte levels.
+              </li>
+              <li>
+                <strong>High Dimensionality:</strong> E.g., micro-arrays
+                containing tens of thousands of dimensions.
+              </li>
+              <li>
+                <strong>High Complexity:</strong> Dynamic streams, temporal
+                sequences, social networks, heterogeneous legacy DBs, Web text,
+                software code.
+              </li>
+              <li>
+                Requirements of new, highly sophisticated real-world
+                applications.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Scalability</span>
+              <span class="tag">#HighDimensionality</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 30 -->
+          <article
+            class="slide-card reveal"
+            id="slide-30"
+            data-category="intro"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 30</span>
+              <span class="badge-outline">Outline Transition</span>
+            </div>
+            <h3 class="slide-title">
+              Chapter 1. Introduction (Topic Transition)
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Transitioning into "What Kind of Applications Are Targeted?"
+            </p>
+            <div class="slide-tags">
+              <span class="tag">#ChapterTransition</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 31 -->
+          <article
+            class="slide-card reveal"
+            id="slide-31"
+            data-category="applications"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 31</span>
+              <span class="badge-outline">Applications</span>
+            </div>
+            <h3 class="slide-title">Applications of Data Mining</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Pervasive implementations across commercial and scientific
+              domains.
+            </p>
+            <div class="key-points-title">Major Domains:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Web Page Analysis:</strong> PageRank &amp; HITS
+                (Hyperlink-Induced Topic Search by Jon Kleinberg identifying
+                hubs &amp; authorities).
+              </li>
+              <li>
+                <strong>Collaborative Filtering:</strong> Recommender systems,
+                market basket targeted marketing.
+              </li>
+              <li>
+                <strong>Bioinformatics:</strong> Microarray gene classification,
+                sequence network analysis.
+              </li>
+              <li>
+                <strong>Software Engineering &amp; Commercial Tools:</strong>
+                Dedicated tools (SAS, MS SQL Server, Oracle Data Mining) moving
+                toward invisible ambient data mining.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#PageRank</span>
+              <span class="tag">#RecommenderSystems</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 32 -->
+          <article
+            class="slide-card reveal"
+            id="slide-32"
+            data-category="intro"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 32</span>
+              <span class="badge-outline">Outline Transition</span>
+            </div>
+            <h3 class="slide-title">
+              Chapter 1. Introduction (Topic Transition)
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Transitioning into "Major Issues in Data Mining".
+            </p>
+            <div class="slide-tags">
+              <span class="tag">#ChapterTransition</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 33 -->
+          <article
+            class="slide-card reveal"
+            id="slide-33"
+            data-category="applications"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 33</span>
+              <span class="badge-outline">Challenges Part 1</span>
+            </div>
+            <h3 class="slide-title">Major Issues in Data Mining (1)</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Methodological and user-interaction challenges in pattern
+              discovery.
+            </p>
+            <div class="key-points-title">Core Issues:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Mining Methodology:</strong> Discovering new knowledge
+                types in multi-dimensional space; handling noise,
+                incompleteness, and uncertainty; constraint-guided discovery.
+              </li>
+              <li>
+                <strong>User Interaction:</strong> Flexible interactive mining,
+                incorporating background knowledge, visual presentation of
+                mining outcomes.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#MiningMethodology</span>
+              <span class="tag">#UserInteraction</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 34 -->
+          <article
+            class="slide-card reveal"
+            id="slide-34"
+            data-category="applications"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 34</span>
+              <span class="badge-outline">Challenges Part 2</span>
+            </div>
+            <h3 class="slide-title">Major Issues in Data Mining (2)</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Scalability, diverse data types, and social implications.
+            </p>
+            <div class="key-points-title">Core Issues:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Efficiency &amp; Scalability:</strong> Parallel,
+                distributed, stream, and incremental algorithms.
+              </li>
+              <li>
+                <strong>Diversity of Data Types:</strong> Complex objects,
+                global networked repositories.
+              </li>
+              <li>
+                <strong>Data Mining &amp; Society:</strong> Social impacts,
+                privacy-preserving data mining, protection of personal
+                information.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Privacy</span>
+              <span class="tag">#DistributedMining</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 35 -->
+          <article
+            class="slide-card reveal"
+            id="slide-35"
+            data-category="intro"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 35</span>
+              <span class="badge-outline">Outline Transition</span>
+            </div>
+            <h3 class="slide-title">
+              Chapter 1. Introduction (Topic Transition)
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Transitioning into "A Brief History of Data Mining Society".
+            </p>
+            <div class="slide-tags">
+              <span class="tag">#ChapterTransition</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 36 -->
+          <article
+            class="slide-card reveal"
+            id="slide-36"
+            data-category="history"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 36</span>
+              <span class="badge-outline">Academic History</span>
+            </div>
+            <h3 class="slide-title">History of the Data Mining Society</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Timeline of academic research workshops and conference
+              establishment.
+            </p>
+            <div class="key-points-title">Historical Timeline:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>1989:</strong> IJCAI KDD Workshop → Book:
+                <em>Knowledge Discovery in Databases</em> (Piatetsky-Shapiro
+                &amp; Frawley, 1991).
+              </li>
+              <li>
+                <strong>1991–1994:</strong> KDD Workshops → Book:
+                <em>Advances in KDD</em> (Fayyad et al., 1996).
+              </li>
+              <li>
+                <strong>1995–1998:</strong> International KDD Conferences
+                (KDD'95–98) &amp; Journal of DMKD (1997).
+              </li>
+              <li>
+                <strong>1998–Present:</strong> ACM SIGKDD conferences, PAKDD
+                (1997), PKDD (1997), SIAM-DM (2001), IEEE ICDM (2001), ACM TKDD
+                (2007).
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#SIGKDD</span>
+              <span class="tag">#AcademicHistory</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 37 -->
+          <article
+            class="slide-card reveal"
+            id="slide-37"
+            data-category="history"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 37</span>
+              <span class="badge-outline">Venues</span>
+            </div>
+            <h3 class="slide-title">Conferences and Journals on Data Mining</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Primary peer-reviewed publishing venues across computer science.
+            </p>
+            <div class="key-points-title">Publication Venues:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>KDD Conferences:</strong> ACM SIGKDD, SIAM Data Mining
+                (SDM), IEEE ICDM, ECML-PKDD, PAKDD, WSDM.
+              </li>
+              <li>
+                <strong>Related Fields:</strong> DB (SIGMOD, VLDB, ICDE), Web/IR
+                (WWW, SIGIR), ML (ICML, NeurIPS/NIPS), PR (CVPR).
+              </li>
+              <li>
+                <strong>Journals:</strong> Data Mining &amp; Knowledge Discovery
+                (DAMI/DMKD), IEEE TKDE, KDD Explorations, ACM TKDD.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Conferences</span>
+              <span class="tag">#Journals</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 38 -->
+          <article
+            class="slide-card reveal"
+            id="slide-38"
+            data-category="history"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 38</span>
+              <span class="badge-outline">Literature Index</span>
+            </div>
+            <h3 class="slide-title">Where to Find Literature References?</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Key digital indexes (DBLP, CiteSeer, Google Scholar) categorized
+              by discipline.
+            </p>
+            <div class="key-points-title">Domain Breakdown:</div>
+            <ul class="key-points-list">
+              <li>
+                <strong>Data Mining/KDD:</strong> SIGKDD, ICDM, SIAM-DM, PKDD,
+                PAKDD, DAMI, ACM TKDD.
+              </li>
+              <li>
+                <strong>Database Systems:</strong> SIGMOD, PODS, VLDB, ICDE,
+                EDBT, TODS, VLDB J.
+              </li>
+              <li>
+                <strong>AI &amp; Machine Learning:</strong> ICML, AAAI, IJCAI,
+                NeurIPS, CVPR, JMLR, AIJ, IEEE-PAMI.
+              </li>
+              <li>
+                <strong>Web &amp; IR / Stats / Visualization:</strong> SIGIR,
+                WWW, CIKM, Joint Stat Meeting, Annals of Stat, CHI, IEEE TVCG.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#DBLP</span>
+              <span class="tag">#LiteratureIndex</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 39 -->
+          <article
+            class="slide-card reveal"
+            id="slide-39"
+            data-category="intro"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 39</span>
+              <span class="badge-outline">Outline Transition</span>
+            </div>
+            <h3 class="slide-title">
+              Chapter 1. Introduction (Topic Transition)
+            </h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Transitioning into "Chapter Summary".
+            </p>
+            <div class="slide-tags">
+              <span class="tag">#ChapterTransition</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 40 -->
+          <article
+            class="slide-card reveal"
+            id="slide-40"
+            data-category="intro"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 40</span>
+              <span class="badge-outline">Summary</span>
+            </div>
+            <h3 class="slide-title">Chapter 1 Summary</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Key takeaways summarizing the introductory principles.
+            </p>
+            <div class="key-points-title">Core Takeaways:</div>
+            <ul class="key-points-list">
+              <li>
+                Data mining discovers interesting, non-trivial patterns from
+                massive datasets.
+              </li>
+              <li>
+                It represents a natural evolution of database technologies with
+                vast application demand.
+              </li>
+              <li>
+                KDD encompasses cleaning, integration, selection,
+                transformation, mining, evaluation, and presentation.
+              </li>
+              <li>
+                Mining functionalities include characterization, discrimination,
+                association, classification, clustering, outlier &amp; trend
+                analysis.
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#ChapterSummary</span>
+              <span class="tag">#Recap</span>
+            </div>
+          </article>
+
+          <!-- SLIDE 41 -->
+          <article
+            class="slide-card reveal"
+            id="slide-41"
+            data-category="history"
+          >
+            <div class="slide-header-bar">
+              <span class="slide-number">Slide 41</span>
+              <span class="badge-outline">Bibliography</span>
+            </div>
+            <h3 class="slide-title">Recommended Reference Books</h3>
+            <div class="rainbow-accent-bar"></div>
+            <p class="slide-description">
+              Comprehensive reading list containing 15 essential textbooks for
+              data mining study.
+            </p>
+            <div class="key-points-title">Featured Textbooks:</div>
+            <ul class="key-points-list">
+              <li>
+                Han &amp; Kamber —
+                <em>Data Mining: Concepts and Techniques (3rd ed.)</em>
+              </li>
+              <li>
+                Hastie, Tibshirani, Friedman —
+                <em>The Elements of Statistical Learning (2nd ed.)</em>
+              </li>
+              <li>
+                Tan, Steinbach, Kumar — <em>Introduction to Data Mining</em>
+              </li>
+              <li>
+                Chakrabarti — <em>Mining the Web</em> &amp; Bing Liu —
+                <em>Web Data Mining</em>
+              </li>
+            </ul>
+            <div class="slide-tags">
+              <span class="tag">#Bibliography</span>
+              <span class="tag">#Textbooks</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         6. RECOMMENDED REFERENCE BOOKS LIBRARY
+         ========================================================================== -->
+    <section id="books" class="section-padding books-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge">Reference Bibliography</span>
+          <h2>15 Recommended Reference Books</h2>
+          <p>
+            Standard academic literature referenced in Slide 41 for in-depth
+            data science exploration.
+          </p>
+        </div>
+
+        <div class="books-grid">
+          <div class="book-card reveal">
+            <h4>1. Data Mining: Concepts &amp; Techniques</h4>
+            <p class="book-author">J. Han, M. Kamber, J. Pei</p>
+            <p class="book-details">3rd Edition, Morgan Kaufmann, 2011.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>2. The Elements of Statistical Learning</h4>
+            <p class="book-author">T. Hastie, R. Tibshirani, J. Friedman</p>
+            <p class="book-details">2nd Edition, Springer, 2009.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>3. Introduction to Data Mining</h4>
+            <p class="book-author">P.-N. Tan, M. Steinbach, V. Kumar</p>
+            <p class="book-details">Addison-Wesley, 2005.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>4. Mining the Web</h4>
+            <p class="book-author">S. Chakrabarti</p>
+            <p class="book-details">Morgan Kaufmann, 2002.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>5. Web Data Mining</h4>
+            <p class="book-author">B. Liu</p>
+            <p class="book-details">Springer, 2007.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>6. Pattern Classification</h4>
+            <p class="book-author">R. O. Duda, P. E. Hart, D. G. Stork</p>
+            <p class="book-details">2nd Edition, Wiley-Interscience, 2000.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>7. Exploratory Data Mining &amp; Data Cleaning</h4>
+            <p class="book-author">T. Dasu, T. Johnson</p>
+            <p class="book-details">John Wiley &amp; Sons, 2003.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>8. Advances in KDD</h4>
+            <p class="book-author">U. Fayyad, G. Piatetsky-Shapiro, et al.</p>
+            <p class="book-details">AAAI/MIT Press, 1996.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>9. Info Visualization in Data Mining</h4>
+            <p class="book-author">U. Fayyad, G. G. Grinstein, A. Wierse</p>
+            <p class="book-details">Morgan Kaufmann, 2001.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>10. Principles of Data Mining</h4>
+            <p class="book-author">D. Hand, H. Mannila, P. Smyth</p>
+            <p class="book-details">MIT Press, 2001.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>11. Machine Learning</h4>
+            <p class="book-author">T. M. Mitchell</p>
+            <p class="book-details">McGraw-Hill, 1997.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>12. Knowledge Discovery in Databases</h4>
+            <p class="book-author">G. Piatetsky-Shapiro, W. J. Frawley</p>
+            <p class="book-details">AAAI/MIT Press, 1991.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>13. Predictive Data Mining</h4>
+            <p class="book-author">S. Weiss, N. Indurkhya</p>
+            <p class="book-details">Morgan Kaufmann, 1998.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>14. Practical ML Tools &amp; Techniques</h4>
+            <p class="book-author">I. H. Witten, E. Frank</p>
+            <p class="book-details">2nd Edition, Morgan Kaufmann, 2005.</p>
+          </div>
+
+          <div class="book-card reveal">
+            <h4>15. Principles of Data Integration</h4>
+            <p class="book-author">A. Doan, A. Halevy, Z. Ives</p>
+            <p class="book-details">Morgan Kaufmann, 2012.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to Top">
+      ↑
+    </button>
+
+    <!-- ==========================================================================
+         7. FOOTER
+         ========================================================================== -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-info">
+            <h3>Data Mining Course Presentation</h3>
+            <p>
+              Chapter 1 complete digital slide deck. Based on "Data Mining:
+              Concepts and Techniques", 3rd Edition by Jiawei Han, Micheline
+              Kamber, and Jian Pei.
+            </p>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#outline">Outline</a></li>
+              <li><a href="#slides">All 41 Slides</a></li>
+              <li><a href="#kdd">KDD Pipeline</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#books">Reference Books</a></li>
+              <li>
+                <a href="https://www.cs.uiuc.edu" target="_blank" rel="noopener"
+                  >UIUC CS Department</a
+                >
+              </li>
+              <li>
+                <a href="https://www.kdd.org" target="_blank" rel="noopener"
+                  >ACM SIGKDD</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            <style type="text/css">
+              .footer-bottom p {
+                font-size: 0.9rem;
+                color: #888;
+                text-align: center;
+                margin-top: 1rem;
+              }
+            </style>
+            © 2026 All Rights Reserved. Designed and Developed maheecse
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==========================================================================
+         8. INTERACTIVE JAVASCRIPT LOGIC
+         ========================================================================== -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* Mobile Navigation Toggle */
+        const menuToggle = document.getElementById("menuToggle");
+        const mainNav = document.getElementById("mainNav");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        function toggleMenu() {
+          const isOpen = mainNav.classList.toggle("open");
+          menuToggle.classList.toggle("active", isOpen);
+          document.body.style.overflow = isOpen ? "hidden" : "";
+        }
+
+        if (menuToggle) {
+          menuToggle.addEventListener("click", toggleMenu);
+        }
+
+        navLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            if (mainNav.classList.contains("open")) {
+              toggleMenu();
+            }
+          });
+        });
+
+        /* Scroll Progress & Back To Top */
+        const progressBar = document.getElementById("progress-bar");
+        const backToTopBtn = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", () => {
+          const scrollTop =
+            window.scrollY || document.documentElement.scrollTop;
+          const docHeight =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+          const scrollPercent = (scrollTop / docHeight) * 100;
+
+          if (progressBar) {
+            progressBar.style.width = scrollPercent + "%";
+          }
+
+          if (backToTopBtn) {
+            if (scrollTop > 400) {
+              backToTopBtn.classList.add("visible");
+            } else {
+              backToTopBtn.classList.remove("visible");
+            }
+          }
+        });
+
+        if (backToTopBtn) {
+          backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          });
+        }
+
+        /* Scroll Reveal Observer */
+        const revealElements = document.querySelectorAll(".reveal");
+        const revealObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            root: null,
+            threshold: 0.1,
+            rootMargin: "0px 0px -40px 0px",
+          },
+        );
+
+        revealElements.forEach((el) => revealObserver.observe(el));
+
+        /* Filter & Search Logic */
+        const searchInput = document.getElementById("slideSearch");
+        const filterPills = document.querySelectorAll(".filter-pill");
+        const slideCards = document.querySelectorAll(".slide-card");
+        const noResultsMsg = document.getElementById("no-results-msg");
+
+        let currentCategory = "all";
+        let currentSearchQuery = "";
+
+        function filterSlides() {
+          let visibleCount = 0;
+
+          slideCards.forEach((card) => {
+            const title =
+              card.querySelector(".slide-title")?.textContent.toLowerCase() ||
+              "";
+            const desc =
+              card
+                .querySelector(".slide-description")
+                ?.textContent.toLowerCase() || "";
+            const tags = Array.from(card.querySelectorAll(".tag"))
+              .map((t) => t.textContent.toLowerCase())
+              .join(" ");
+            const category = card.getAttribute("data-category") || "all";
+
+            const matchesSearch =
+              title.includes(currentSearchQuery) ||
+              desc.includes(currentSearchQuery) ||
+              tags.includes(currentSearchQuery);
+            const matchesCategory =
+              currentCategory === "all" ||
+              category.split(" ").includes(currentCategory);
+
+            if (matchesSearch && matchesCategory) {
+              card.style.display = "block";
+              visibleCount++;
+            } else {
+              card.style.display = "none";
+            }
+          });
+
+          if (noResultsMsg) {
+            noResultsMsg.style.display = visibleCount === 0 ? "block" : "none";
+          }
+        }
+
+        filterPills.forEach((pill) => {
+          pill.addEventListener("click", () => {
+            filterPills.forEach((p) => p.classList.remove("active"));
+            pill.classList.add("active");
+            currentCategory = pill.getAttribute("data-filter");
+            filterSlides();
+          });
+        });
+
+        if (searchInput) {
+          searchInput.addEventListener("input", (e) => {
+            currentSearchQuery = e.target.value.toLowerCase().trim();
+            filterSlides();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
