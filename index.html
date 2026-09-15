@@ -186,24 +186,28 @@
         transform: translateY(-2px);
       }
 
-      .badge {
-        display: inline-block;
-        padding: 0.3rem 0.85rem;
-        border-radius: 50px;
-        font-size: 0.8rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        background-color: var(--light-mint);
-        color: var(--dark-forest);
-        margin-bottom: 0.75rem;
-      }
-
-      .badge-outline {
-        background-color: transparent;
-        border: 1px solid var(--medium-green);
-        color: var(--forest-green);
-      }
+   .badge, 
+.badge-outline {
+  display: inline-block;
+  
+  /* Size choto korar jonno padding o font-size komano hoyeche */
+  padding: 0.25rem 0.75rem; 
+  font-size: 0.7rem;
+  
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  line-height: 1.2;
+  
+  border-radius: 9999px;
+  background-color: #ffffff;
+  border: 1px solid var(--medium-green);
+  color: var(--forest-green);
+  
+  /* Compact Pop-up shadow */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-bottom: 0.5rem;
+}
 
       .section-padding {
         padding: 4.5rem 0;
