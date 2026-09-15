@@ -1,59 +1,98 @@
-# Educational Website
+# Data Mining — Concepts and Techniques
 
-A clean, responsive, and professional educational website developed as a frontend web development project.
+A professional educational website presenting **Chapter 1: Introduction to Data Mining** in a clean, structured, and easy-to-follow web format.
+
+The website is based on the concepts and topics covered in *Data Mining: Concepts and Techniques (3rd Edition)* by Jiawei Han, Micheline Kamber, and Jian Pei.
+
+---
 
 ## Live Demo
 
-[View Live Website]([YOUR-LIVE-LINK-HERE](https://maheecse.github.io/trying/#outline))
+[View Live Website](https://maheecse.github.io/trying/#outline)
 
-> Replace the link above with the deployed website URL.
-
----
-
-## Overview
-
-This project is a simple educational website designed to present academic and learning-related content in a clean, organized, and user-friendly interface.
-
-The website follows a professional educational design with a forest-green color palette inspired by the provided design reference.
+> Replace `YOUR-LIVE-LINK-HERE` with the deployed website URL.
 
 ---
 
-## Features
+## Project Overview
 
-- Clean and professional UI
-- Educational content presentation
-- Responsive layout
-- Simple navigation
-- Organized sections
-- Professional typography
-- Forest-green color theme
-- Mobile-friendly design
-- Lightweight static website
+This project transforms the learning materials of **Chapter 1 — Introduction to Data Mining** into a structured educational webpage.
+
+The website presents important concepts of data mining, the KDD process, data mining functions, applications, major issues, historical development, and related topics in a visually organized format.
+
+The original chapter covers topics including why data mining is needed, what data mining means, the multi-dimensional view of data mining, types of data and patterns, technologies, applications, major issues, history, and a summary. :contentReference[oaicite:2]{index=2}
 
 ---
 
-## Technologies Used
+## Topics Covered
 
-- HTML5
-- CSS3
+### 1. Why Data Mining?
+
+- Growth of data from terabytes to petabytes
+- Data collection and availability
+- Major sources of data
+- Business and scientific data
+- Need for automated analysis of massive datasets
+
+### 2. Evolution of Sciences
+
+The website presents the evolution from:
+
+- Empirical Science
+- Theoretical Science
+- Computational Science
+- Data Science
+
+Data mining is introduced as an important challenge in the era of large-scale data. :contentReference[oaicite:3]{index=3}
+
+### 3. Evolution of Database Technology
+
+The development of database technology from the 1960s through the 2000s is presented, including:
+
+- Database creation
+- Relational databases
+- RDBMS
+- Data warehousing
+- Data mining
+- Web databases
+- Stream data management
 
 ---
 
-## Color Palette
+## What Is Data Mining?
 
-| Color | Hex Code |
-|---|---|
-| Forest Green | `#2E6F40` |
-| Light Mint | `#CFF0DC` |
-| Medium Green | `#68BA7F` |
-| Dark Forest | `#253D2C` |
-| White | `#FFFFFF` |
+Data mining is presented as the extraction of interesting, previously unknown, potentially useful patterns or knowledge from large amounts of data.
+
+The chapter also introduces related terms such as:
+
+- Knowledge Discovery in Databases (KDD)
+- Knowledge extraction
+- Data and pattern analysis
+- Data archaeology
+- Information harvesting
+- Business intelligence :contentReference[oaicite:4]{index=4}
 
 ---
 
-## Project Structure
+## Knowledge Discovery in Databases (KDD)
+
+The website explains the KDD process and its major stages:
 
 ```text
-trying/
-│
-└── index.html
+Databases
+    ↓
+Data Cleaning
+    ↓
+Data Integration
+    ↓
+Data Warehouse
+    ↓
+Selection
+    ↓
+Task-Relevant Data
+    ↓
+Data Mining
+    ↓
+Pattern Evaluation
+    ↓
+Knowledge
